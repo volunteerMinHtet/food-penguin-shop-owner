@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 
 import { FoodsList } from './features/foods/FoodsList'
 import { AddFoodForm } from './features/foods/AddFoodForm'
+import { AddCategoryForm } from './features/categories/AddCategoryForm'
 
 import clsx from 'clsx'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
@@ -177,6 +178,7 @@ export default function App() {
               <Route exact path="/" component={FoodsList} />
               <Route exact path="/foods" component={FoodsList} />
               <Route exact path="/foods/add" component={AddFoodForm} />
+              <Route exact path="/categories/add" component={AddCategoryForm} />
               <Redirect to="/" />
             </Switch>
           </Paper>

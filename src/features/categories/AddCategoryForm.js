@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+
+import { Link as RouteLink } from 'react-router-dom'
 
 import { nanoid } from '@reduxjs/toolkit'
 
@@ -7,19 +8,7 @@ import { useDispatch } from 'react-redux'
 
 import { addNewCategory } from './categoriesSlice'
 
-import {
-  makeStyles,
-  Button,
-  FormControl,
-  TextField,
-  Typography,
-  InputLabel,
-  Select,
-  MenuItem,
-  Grid,
-  Box,
-  Tooltip,
-} from '@material-ui/core'
+import { makeStyles, Button, FormControl, TextField, Grid, Box } from '@material-ui/core'
 
 import Title from '../title/Title'
 
@@ -92,7 +81,9 @@ export const AddCategoryForm = () => {
         </form>
       </Box>
 
-      <Link to="/foods">Back</Link>
+      <RouteLink to="/categories">
+        <Button variant="contained">Back</Button>
+      </RouteLink>
     </Box>
   )
 }

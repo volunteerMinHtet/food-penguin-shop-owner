@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link as RouteLink } from 'react-router-dom'
 
 import { nanoid } from '@reduxjs/toolkit'
 
@@ -12,13 +12,11 @@ import {
   Button,
   FormControl,
   TextField,
-  Typography,
   InputLabel,
   Select,
   MenuItem,
   Grid,
   Box,
-  Tooltip,
 } from '@material-ui/core'
 
 import Title from '../title/Title'
@@ -29,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   inputFormControl: {
-    // margin: theme.spacing(1),
     width: 250,
   },
   btnFormControl: {
@@ -82,7 +79,6 @@ const AddFoodForm = () => {
               </Grid>
 
               <Grid item xs="auto">
-                {/* <Tooltip arrow title={category}> */}
                 <FormControl variant="outlined" className={classes.inputFormControl}>
                   <InputLabel id="categoryLabel">Category</InputLabel>
                   <Select
@@ -96,13 +92,11 @@ const AddFoodForm = () => {
                       <em>None</em>
                     </MenuItem>
                     <MenuItem value={1} className={classes.selectOption}>
-                      {/* <Typography noWrap>Sea Foods</Typography> */}
                       Sea Food
                     </MenuItem>
                     <MenuItem value={2}>Chinese Food</MenuItem>
                   </Select>
                 </FormControl>
-                {/* </Tooltip> */}
               </Grid>
 
               <Grid item xs="auto">
@@ -133,7 +127,9 @@ const AddFoodForm = () => {
         </form>
       </Box>
 
-      <Link to="/foods">Back</Link>
+      <RouteLink to="/foods">
+        <Button variant="contained">Back</Button>
+      </RouteLink>
     </Box>
   )
 }

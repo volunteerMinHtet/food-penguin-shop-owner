@@ -13,12 +13,8 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import Link from '@material-ui/core/Link'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
-import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
 
 import Title from '../title/Title'
 import PrimaryLoading from '../../components/loading/PrimaryLoading'
@@ -33,9 +29,6 @@ const useStyles = makeStyles((theme) => ({
   },
   seeMore: {
     marginTop: theme.spacing(3),
-  },
-  loadingBox: {
-    // justifyContent: 'center',
   },
 }))
 
@@ -77,9 +70,6 @@ let Loading = () => {
     <Grid container>
       <Grid item xs={12}>
         <PrimaryLoading />
-        {/* <Typography align="center" className={classes.loadingTypography}>
-          
-        </Typography> */}
       </Grid>
     </Grid>
   )
@@ -121,8 +111,12 @@ const FoodsList = () => {
           See more foods
         </Link>
       </div> */}
-      <RouteLink to="/foods/add">Add</RouteLink>
-      <RouteLink to="/categories">Categories</RouteLink>
+      <RouteLink to="/foods/add">
+        <Button variant="contained">Add New Food</Button>
+      </RouteLink>
+      <RouteLink to="/categories">
+        <Button variant="contained">Category</Button>
+      </RouteLink>
     </React.Fragment>
   )
 }

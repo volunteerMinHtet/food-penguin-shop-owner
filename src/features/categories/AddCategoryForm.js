@@ -96,3 +96,5 @@ export const AddCategoryForm = () => {
     </Box>
   )
 }
+
+export default AddCategoryForm

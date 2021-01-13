@@ -11,6 +11,7 @@ const initialState = categoriesAdapter.getInitialState({
 
 export const fetchCategories = createAsyncThunk('categories/fetchCategories', async () => {
   const response = await getCategories('/api/categories')
+  console.log(response)
   return response.json()
 })
 

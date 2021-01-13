@@ -15,9 +15,13 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Link from '@material-ui/core/Link'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
+import Box from '@material-ui/core/Box'
 
 import Title from '../title/Title'
-import { Grid, Typography } from '@material-ui/core'
+import PrimaryLoading from '../../components/loading/PrimaryLoading'
 
 function preventDefault(event) {
   event.preventDefault()
@@ -29,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
   seeMore: {
     marginTop: theme.spacing(3),
+  },
+  loadingBox: {
+    // justifyContent: 'center',
   },
 }))
 
@@ -69,15 +76,16 @@ let Loading = () => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Typography align="center" className={classes.loadingTypography}>
-          <CircularProgress />
-        </Typography>
+        <PrimaryLoading />
+        {/* <Typography align="center" className={classes.loadingTypography}>
+          
+        </Typography> */}
       </Grid>
     </Grid>
   )
 }
 
-export const FoodsList = () => {
+const FoodsList = () => {
   const classes = useStyles()
 
   const dispatch = useDispatch()
@@ -108,12 +116,15 @@ export const FoodsList = () => {
 
       {content}
 
-      <div className={classes.seeMore}>
+      {/* <div className={classes.seeMore}>
         <Link color="primary" href="#" onClick={preventDefault}>
-          See more orders
+          See more foods
         </Link>
-      </div>
+      </div> */}
       <RouteLink to="/foods/add">Add</RouteLink>
+      <RouteLink to="/categories">Categories</RouteLink>
     </React.Fragment>
   )
 }
+
+export default FoodsList

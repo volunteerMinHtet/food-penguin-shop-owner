@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const AddFoodForm = () => {
+const AddFoodForm = () => {
   const classes = useStyles()
 
   const dispatch = useDispatch()
@@ -137,3 +137,5 @@ export const AddFoodForm = () => {
     </Box>
   )
 }
+
+export default AddFoodForm

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Link as RouteLink } from 'react-router-dom'
 
-import { nanoid } from '@reduxjs/toolkit'
-
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { addNewFood } from './foodSlice'
+
+import { selectAllCategories } from '../categories/categoriesSlice'
 
 import {
   makeStyles,
@@ -41,11 +41,12 @@ const useStyles = makeStyles((theme) => ({
 const AddFoodForm = () => {
   const classes = useStyles()
 
-  const dispatch = useDispatch()
-
   const [name, setName] = useState('')
   const [category, setCategory] = useState('')
   const [price, setPrice] = useState('')
+
+  const dispatch = useDispatch()
+  const categories = useSelector(selectAllCategories)
 
   const canSave = [name, category, price].every(Boolean)
 
@@ -54,9 +55,16 @@ const AddFoodForm = () => {
   const onPriceChanged = (e) => setPrice(e.target.value)
 
   const onAddBtnClicked = async () => {
-    await dispatch(addNewFood({ id: nanoid(), name, category, price }))
-    console.log(`${name}, ${category}, ${price}`)
+    await dispatch(addNewFood({ name, category, price }))
   }
+
+  const categoryOptions = categories.map((category) => {
+    return (
+      <MenuItem key={category.id} value={category.id} className={classes.selectOption}>
+        {category.name}
+      </MenuItem>
+    )
+  })
 
   return (
     <Box className={classes.root}>
@@ -91,10 +99,11 @@ const AddFoodForm = () => {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value={1} className={classes.selectOption}>
+                    {categoryOptions}
+                    {/* <MenuItem value={1} className={classes.selectOption}>
                       Sea Food
                     </MenuItem>
-                    <MenuItem value={2}>Chinese Food</MenuItem>
+                    <MenuItem value={2}>Chinese Food</MenuItem> */}
                   </Select>
                 </FormControl>
               </Grid>

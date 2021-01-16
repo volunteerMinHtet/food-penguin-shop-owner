@@ -1,8 +1,10 @@
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { getFoods } from '../../api/foodApi'
+import { getFoodsApi, addNewFoodApi } from '../../api/foodApi'
 
-const foodsAdapter = createEntityAdapter()
+const foodsAdapter = createEntityAdapter({
+  sortComparer: (a, b) => b.updated_at.localeCompare(a.updated_at),
+})
 
 const initialState = foodsAdapter.getInitialState({
   status: 'idle',
@@ -10,12 +12,13 @@ const initialState = foodsAdapter.getInitialState({
 })
 
 export const fetchFoods = createAsyncThunk('foods/fetchFoods', async () => {
-  const response = await getFoods('/api/foods')
+  const response = await getFoodsApi('/api/foods')
   return response.json()
 })
 
 export const addNewFood = createAsyncThunk('foods/addNewFood', async (initialFood) => {
-  return initialFood
+  const response = await addNewFoodApi(initialFood)
+  return response.json()
 })
 
 const foodsSlice = createSlice({

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useSelector, useDispatch, connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { Link as RouteLink } from 'react-router-dom'
 
@@ -7,7 +7,7 @@ import { selectFoodById, selectFoodIds } from './foodSlice'
 
 import { fetchFoods } from './foodSlice'
 
-import { makeStyles } from '@material-ui/core/styles'
+// import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -18,19 +18,17 @@ import Button from '@material-ui/core/Button'
 
 import Title from '../title/Title'
 import PrimaryLoading from '../../components/loading/PrimaryLoading'
+import { FoodCategory } from './FoodCategory'
 
-function preventDefault(event) {
-  event.preventDefault()
-}
+// function preventDefault(event) {
+//   event.preventDefault()
+// }
 
-const useStyles = makeStyles((theme) => ({
-  loadingTypography: {
-    padding: theme.spacing(2, 0),
-  },
-  seeMore: {
-    marginTop: theme.spacing(3),
-  },
-}))
+// const useStyles = makeStyles((theme) => ({
+//   seeMore: {
+//     marginTop: theme.spacing(3),
+//   },
+// }))
 
 let FoodExcerpt = ({ foodId }) => {
   const food = useSelector((state) => selectFoodById(state, foodId))
@@ -38,7 +36,9 @@ let FoodExcerpt = ({ foodId }) => {
   return (
     <TableRow key={food.id}>
       <TableCell>{food.name}</TableCell>
-      <TableCell>{food.category_id}</TableCell>
+      <TableCell>
+        <FoodCategory categoryId={food.category_id} />
+      </TableCell>
       <TableCell align="right">{food.price}</TableCell>
     </TableRow>
   )
@@ -51,7 +51,7 @@ let FoodTable = ({ orderedFoodIds }) => {
         <TableRow>
           <TableCell>Name</TableCell>
           <TableCell>Category</TableCell>
-          <TableCell align="right">Price</TableCell>
+          <TableCell align="right">Price ($)</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -64,8 +64,6 @@ let FoodTable = ({ orderedFoodIds }) => {
 }
 
 let Loading = () => {
-  const classes = useStyles()
-
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -76,7 +74,7 @@ let Loading = () => {
 }
 
 const FoodsList = () => {
-  const classes = useStyles()
+  // const classes = useStyles()
 
   const dispatch = useDispatch()
   const orderedFoodIds = useSelector(selectFoodIds)

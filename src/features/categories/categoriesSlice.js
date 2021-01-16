@@ -1,8 +1,10 @@
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { getCategories } from '../../api/categoriesApi'
+import { getCategoriesApi, addNewCategoryApi } from '../../api/categoriesApi'
 
-const categoriesAdapter = createEntityAdapter()
+const categoriesAdapter = createEntityAdapter({
+  sortComparer: (a, b) => b.updated_at.localeCompare(a.updated_at),
+})
 
 const initialState = categoriesAdapter.getInitialState({
   status: 'idle',
@@ -10,14 +12,15 @@ const initialState = categoriesAdapter.getInitialState({
 })
 
 export const fetchCategories = createAsyncThunk('categories/fetchCategories', async () => {
-  const response = await getCategories('/api/categories')
+  const response = await getCategoriesApi('/api/categories')
   return response.json()
 })
 
 export const addNewCategory = createAsyncThunk(
   'categories/addNewCategory',
   async (initialCategory) => {
-    return initialCategory
+    const response = await addNewCategoryApi(initialCategory)
+    return response.json()
   }
 )
 

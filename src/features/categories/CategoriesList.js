@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { useSelector, useDispatch, connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { Link as RouteLink } from 'react-router-dom'
 
 import { fetchCategories, selectCategoryById, selectCategoryIds } from './categoriesSlice'
 
-import { makeStyles } from '@material-ui/core/styles'
+// import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -17,18 +17,15 @@ import Button from '@material-ui/core/Button'
 import Title from '../title/Title'
 import PrimaryLoading from '../../components/loading/PrimaryLoading'
 
-function preventDefault(event) {
-  event.preventDefault()
-}
+// function preventDefault(event) {
+//   event.preventDefault()
+// }
 
-const useStyles = makeStyles((theme) => ({
-  loadingTypography: {
-    padding: theme.spacing(2, 0),
-  },
-  seeMore: {
-    marginTop: theme.spacing(3),
-  },
-}))
+// const useStyles = makeStyles((theme) => ({
+//   seeMore: {
+//     marginTop: theme.spacing(3),
+//   },
+// }))
 
 let CategoryExcerpt = ({ categoryId }) => {
   const category = useSelector((state) => selectCategoryById(state, categoryId))
@@ -58,22 +55,17 @@ let FoodTable = ({ orderedCategoryIds }) => {
 }
 
 let Loading = () => {
-  const classes = useStyles()
-
   return (
     <Grid container>
       <Grid item xs={12}>
         <PrimaryLoading />
-        {/* <Typography align="center" className={classes.loadingTypography}>
-          
-        </Typography> */}
       </Grid>
     </Grid>
   )
 }
 
 const CategoriesList = () => {
-  const classes = useStyles()
+  // const classes = useStyles()
 
   const dispatch = useDispatch()
   const orderedCategoryIds = useSelector(selectCategoryIds)
@@ -89,10 +81,10 @@ const CategoriesList = () => {
 
   let content
 
-  if (categoryStatus === 'successed') {
+  if (categoryStatus === 'loading') {
     content = <Loading />
-    // } else if (categoryStatus === 'successed') {
-    //   content = <FoodTable orderedCategoryIds={orderedCategoryIds} />
+  } else if (categoryStatus === 'successed') {
+    content = <FoodTable orderedCategoryIds={orderedCategoryIds} />
   } else if (categoryStatus === error) {
     content = <div>{error}</div>
   }

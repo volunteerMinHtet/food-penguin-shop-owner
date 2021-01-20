@@ -9,6 +9,8 @@ const AddFoodForm = lazy(() => import('../features/foods/AddFoodForm'))
 const CategoriesList = lazy(() => import('../features/categories/CategoriesList'))
 const AddCategoryForm = lazy(() => import('../features/categories/AddCategoryForm'))
 
+const UserLoginForm = lazy(() => import('../features/auth/UserLoginForm'))
+
 const RootRouter = () => (
   <Suspense fallback={<PrimaryLoading />}>
     <Switch>
@@ -17,6 +19,7 @@ const RootRouter = () => (
       <Route exact path="/foods/add" component={AddFoodForm} />
       <Route exact path="/categories" component={CategoriesList} />
       <Route exact path="/categories/add" component={AddCategoryForm} />
+      <Route exact path="/user/login" component={UserLoginForm} />
       <Redirect to="/" />
     </Switch>
   </Suspense>

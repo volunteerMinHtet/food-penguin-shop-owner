@@ -5,9 +5,11 @@ import store from './app/store'
 import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker'
 
+import { checkUserLoggedIn } from './features/auth/userSlice'
 import { fetchCategories } from './features/categories/categoriesSlice'
 
 store.dispatch(fetchCategories())
+store.dispatch(checkUserLoggedIn())
 
 ReactDOM.render(
   // <React.StrictMode>

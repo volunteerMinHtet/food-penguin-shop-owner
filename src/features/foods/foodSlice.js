@@ -1,6 +1,6 @@
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { getFoodsApi, addNewFoodApi } from '../../api/foodApi'
+import { getFoodsApi, addNewFoodApi } from '../../services/food/foodService'
 
 const foodsAdapter = createEntityAdapter({
   sortComparer: (a, b) => b.updated_at.localeCompare(a.updated_at),
@@ -12,13 +12,15 @@ const initialState = foodsAdapter.getInitialState({
 })
 
 export const fetchFoods = createAsyncThunk('foods/fetchFoods', async () => {
-  const response = await getFoodsApi('/api/foods')
-  return response.json()
+  const response = await getFoodsApi()
+  console.log(response)
+  return response
 })
 
 export const addNewFood = createAsyncThunk('foods/addNewFood', async (initialFood) => {
-  const response = await addNewFoodApi(initialFood)
-  return response.json()
+  const response = await (await addNewFoodApi(initialFood)).json()
+
+  return response
 })
 
 const foodsSlice = createSlice({
@@ -30,12 +32,17 @@ const foodsSlice = createSlice({
       state.status = 'loading'
     },
     [fetchFoods.fulfilled]: (state, action) => {
-      state.status = 'successed'
-      foodsAdapter.upsertMany(state, action.payload)
+      if (action.payload.success) {
+        state.status = 'successed'
+        foodsAdapter.upsertMany(state, action.payload.data)
+      } else if (!action.payload.success) {
+        state.status = 'failed'
+        state.error = action.payload.message
+      }
     },
     [fetchFoods.rejected]: (state, action) => {
       state.status = 'failed'
-      state.error = action.payload
+      state.error = 'Unknown error'
     },
     [addNewFood.fulfilled]: foodsAdapter.addOne,
   },

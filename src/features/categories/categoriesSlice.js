@@ -1,6 +1,6 @@
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit'
 
-import { getCategoriesApi, addNewCategoryApi } from '../../api/categoriesApi'
+import { getCategoriesApi, addNewCategoryApi } from '../../services/category/categoryService'
 
 const categoriesAdapter = createEntityAdapter({
   sortComparer: (a, b) => b.updated_at.localeCompare(a.updated_at),
@@ -12,15 +12,17 @@ const initialState = categoriesAdapter.getInitialState({
 })
 
 export const fetchCategories = createAsyncThunk('categories/fetchCategories', async () => {
-  const response = await getCategoriesApi('/api/categories')
-  return response.json()
+  const response = await getCategoriesApi()
+  // console.log(response)
+  return response
 })
 
 export const addNewCategory = createAsyncThunk(
   'categories/addNewCategory',
   async (initialCategory) => {
     const response = await addNewCategoryApi(initialCategory)
-    return response.json()
+    console.log(response)
+    return response
   }
 )
 
@@ -33,14 +35,26 @@ const categoriesSlice = createSlice({
       state.status = 'loading'
     },
     [fetchCategories.fulfilled]: (state, action) => {
-      state.status = 'successed'
-      categoriesAdapter.upsertMany(state, action.payload)
+      if (action.payload.success) {
+        state.status = 'successed'
+        categoriesAdapter.upsertMany(state, action.payload.data)
+      } else if (!action.payload.success) {
+        state.status = 'failed'
+        state.error = action.payload.message
+      }
     },
     [fetchCategories.rejected]: (state, action) => {
       state.status = 'failed'
-      state.error = action.payload
+      state.error = 'Unknown error'
     },
-    [addNewCategory.fulfilled]: categoriesAdapter.addOne,
+    // [addNewCategory.fulfilled]: categoriesAdapter.addOne,
+    [addNewCategory.fulfilled]: (state, action) => {
+      if (action.payload.success) {
+        categoriesAdapter.upsertOne(state, action.payload.data)
+      } else if (!action.payload.success) {
+        state.error = action.payload.message
+      }
+    },
   },
 })
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router, Link as RouteLink } from 'react-router-dom'
 
 import RootRouter from '../routes/RootRouter'
 
@@ -22,6 +22,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import InboxIcon from '@material-ui/icons/MoveToInbox'
 import MailIcon from '@material-ui/icons/Mail'
 import Paper from '@material-ui/core/Paper'
+import PermIdentityIcon from '@material-ui/icons/PermIdentity'
 
 const drawerWidth = 240
 
@@ -88,6 +89,10 @@ const useStyles = makeStyles((theme) => ({
   contentPaper: {
     padding: theme.spacing(2),
   },
+  routeLink: {
+    textDecoration: 'none',
+    color: 'black',
+  },
 }))
 
 export default function PrimaryLayout() {
@@ -150,21 +155,34 @@ export default function PrimaryLayout() {
           </div>
           <Divider />
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
+            <RouteLink to="/user/login" className={classes.routeLink}>
+              <ListItem button>
+                <ListItemIcon>
+                  <PermIdentityIcon />
+                </ListItemIcon>
+                <ListItemText primary="Login" />
               </ListItem>
-            ))}
+            </RouteLink>
           </List>
           <Divider />
           <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
+            <RouteLink to="/foods" className={classes.routeLink}>
+              <ListItem button>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary="Food" />
               </ListItem>
-            ))}
+            </RouteLink>
+
+            <RouteLink to="/categories" className={classes.routeLink}>
+              <ListItem button>
+                <ListItemIcon>
+                  <MailIcon />
+                </ListItemIcon>
+                <ListItemText primary="Category" />
+              </ListItem>
+            </RouteLink>
           </List>
         </Drawer>
         <main className={classes.content}>
